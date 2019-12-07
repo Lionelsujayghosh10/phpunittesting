@@ -38,4 +38,19 @@ class UserTest extends  TestCase {
     }
 
 
+    public function testNotificationIsSent(){
+        $user = new User;
+        $user->email = 'sujayamway2018@gmail.com';
+
+        $mock_mailer = $this->createMock(Mailer::class);
+
+        $mock_mailer->expects($this->once())->method('sendMessage')->with($this->equalTo('sujayamway2018@gmail.com'), $this->equalTo('hello'))->willReturn(true);
+        
+
+        $user->setMailer($mock_mailer);
+
+        $this->assertTrue($user->notify("hello"));
+    }
+
+
 }
