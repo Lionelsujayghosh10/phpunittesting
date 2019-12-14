@@ -55,14 +55,15 @@ class UserTest extends  TestCase {
 
     public function testCannotNotifyUserWithNoEmail() {
         $user = new User;
-
+        //$mock_mailer = new Mailer();
+        $mock_mailer = $this->getMockBuilder(Mailer::class)->setMethods(null)->getMock();
         //$mock_mailer = $this->createMock(Mailer::class);
 
         //$mock_mailer->method('sendMessage')->will($this->throwException(new Exception));
         $user->setMailer($mock_mailer);
-        
-        $user->notify("hello");
         $this->expectException(Exception::class);
+        $user->notify("hello");
+        
     }
 
 
